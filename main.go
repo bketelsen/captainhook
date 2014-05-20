@@ -1,4 +1,4 @@
-package main
+package createconfig
 
 import (
 	"github.com/bketelsen/captainhook/createconfig"
@@ -11,12 +11,12 @@ func main() {
 	captain := comandante.New("captainhook", "")
 	captain.IncludeHelp()
 
-	registerCommand := func(c *comandante.Command) {
-		captain.RegisterCommand(c)
-	}
+	hookd := hookd.NewCommand()
+	captain.RegisterCommand(hookd)
 
-	registerCommand(httpd.NewCommand())
-	registerCommand(createconfig.NewCommand())
+	config := createconfig.NewCommand()
+	config.FlagInit = createconfig.GetFlagHandler
+	captain.RegisterCommand(config)
 
 	log.PanicIf(captain.Run())
 }
