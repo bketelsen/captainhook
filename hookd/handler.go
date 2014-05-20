@@ -11,5 +11,5 @@ func hookhandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	key := params["key"]
 	log.Printf("Received Hook for key '%s'\n", key)
-	w.Write([]byte("Hello " + key))
+	w.Write([]byte("Hello " + key + " " + configdir))
 }
