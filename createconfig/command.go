@@ -17,7 +17,7 @@ func NewCommand() *comandante.Command {
 }
 
 func createCommand() error {
-	fmt.Println("Some Config would be spit out here")
+	fmt.Printf("Some Config would be spit out here and it would be named %s\n", filename)
 	return nil
 }
 
