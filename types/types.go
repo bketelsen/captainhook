@@ -5,5 +5,6 @@ type Orchestration struct {
 }
 
 type Script struct {
-	Command string `json:"command"`
+	Command string   `json:"command"`
+	Args    []string `json:"args"`
 }

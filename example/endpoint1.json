@@ -1,0 +1,17 @@
+{
+    "scripts": [
+        {
+            "command": "ls",
+            "args": [
+                "-l",
+                "-a"
+            ]
+        },
+        {
+            "command": "echo",
+            "args": [
+		    "hello"
+		    ]
+        }
+    ]
+}

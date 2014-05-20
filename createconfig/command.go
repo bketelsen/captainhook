@@ -22,8 +22,9 @@ func NewCommand() *comandante.Command {
 func createCommand() error {
 
 	o := types.Orchestration{}
+	a1 := []string{"-l", "-a"}
+	s1 := types.Script{Command: "ls", Args: a1}
 
-	s1 := types.Script{Command: "ls"}
 	s2 := types.Script{Command: "ps"}
 
 	scripts := []types.Script{s1, s2}
