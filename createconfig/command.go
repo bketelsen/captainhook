@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/bketelsen/captainhook/types"
 	"github.com/robmerrell/comandante"
@@ -30,8 +31,19 @@ func createCommand() error {
 
 	fmt.Printf("Some Config would be spit out here and it would be named %s\n", filename)
 
-	output, _ := json.MarshalIndent(o, "", "    ")
-	fmt.Println(string(output))
+	output, err := json.MarshalIndent(o, "", "    ")
+	if err != nil {
+		return err
+	}
+	f, err := os.Create(filename)
+	defer f.Close()
+	if err != nil {
+		return err
+	}
+	_, err = f.Write(output)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
