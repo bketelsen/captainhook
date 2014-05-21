@@ -1,6 +1,5 @@
 # captainhook
 
-
 A generic webhook endpoint that runs scripts based on the URL called
 
 This tool was built as part of a CI orchestration process, to be called when
@@ -89,7 +88,6 @@ go build .
 
 - consider making the POST data from the webhook available in some way
 - more logs
-- tests
 
 
 Copyright 2014, Brian Ketelsen and Kelsey Hightower
