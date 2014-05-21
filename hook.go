@@ -10,16 +10,22 @@ import (
 
 func hookHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	key := params["key"]
-	log.Printf("Received Hook for key '%s'\n", key)
-	rs, err := executeScriptsById(key)
+	id := params["id"]
+	log.Printf("Received hook for id '%s' from %s\n", id, r.RemoteAddr)
+	rb, err := NewRunBook(id)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	response, err := rb.execute()
+	if err != nil {
+        log.Println(err.Error())
+        http.Error(w, err.Error(), 500)
+        return
+    }
 	if echo {
-		data, err := json.MarshalIndent(Results{rs}, "", "  ")
+		data, err := json.MarshalIndent(response, "", "  ")
 		if err != nil {
 			log.Println(err.Error())
 		}

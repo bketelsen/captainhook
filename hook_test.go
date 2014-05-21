@@ -47,7 +47,7 @@ var hookHanderTests = []struct {
 func TestHookHandler(t *testing.T) {
 	// Start a test server so we can test using the gorilla mux.
 	r := mux.NewRouter()
-	r.HandleFunc("/{key}", hookHandler).Methods("POST")
+	r.HandleFunc("/{id}", hookHandler).Methods("POST")
 	ts := httptest.NewServer(r)
 	defer ts.Close()
 

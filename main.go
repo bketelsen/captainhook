@@ -27,7 +27,7 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/{key}", hookHandler).Methods("POST")
+	r.HandleFunc("/{id}", hookHandler).Methods("POST")
 	http.Handle("/", r)
 
 	log.Printf("Listening on %s\n", listenAddr)

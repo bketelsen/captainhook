@@ -10,18 +10,19 @@ import (
 	"syscall"
 )
 
-type Results struct {
-	Results []Result `json:"results"`
+// runBook represents a collection of scripts.
+type runBook struct {
+	Scripts []script `json:"scripts"`
 }
 
-type Result struct {
+type runBookResponse struct {
+	Results []result `json:"results"`
+}
+
+type result struct {
 	Stdout     string `json:"stdout"`
 	Stderr     string `json:"stderr"`
 	StatusCode int    `json:"status_code"`
-}
-
-type runBook struct {
-	Scripts []script `json:"scripts"`
 }
 
 type script struct {
@@ -29,30 +30,31 @@ type script struct {
 	Args    []string `json:"args"`
 }
 
-func executeScriptsById(key string) ([]Result, error) {
-	rb, err := getRunBookFromKey(key)
-	if err != nil {
-		return nil, err
-	}
-	rs := make([]Result, 0)
-	for _, x := range rb.Scripts {
+// NewRunBook returns the runBook identified by id. 
+func NewRunBook(id string) (*runBook, error) {
+	return getRunBookById(id)	
+}
+
+func (r *runBook) execute() (*runBookResponse, error) {
+	results := make([]result, 0)
+	for _, x := range r.Scripts {
 		r, err := execScript(x)
 		if err != nil {
 			log.Println("ERROR :" + err.Error())
 		}
-		rs = append(rs, r)
+		results = append(results, r)
 	}
-	return rs, nil
+	return &runBookResponse{results}, nil
 }
 
-func execScript(s script) (Result, error) {
+func execScript(s script) (result, error) {
 	cmd := exec.Command(s.Command, s.Args...)
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	err := cmd.Run()
-	r := Result{
+	r := result{
 		stdout.String(),
 		stderr.String(),
 		cmd.ProcessState.Sys().(syscall.WaitStatus).ExitStatus(),
@@ -60,14 +62,14 @@ func execScript(s script) (Result, error) {
 	return r, err
 }
 
-func getRunBookFromKey(key string) (runBook, error) {
-	var r runBook
-	runBookPath := fmt.Sprintf("%s/%s.json", configdir, key)
+func getRunBookById(id string) (*runBook, error) {
+	var r = new(runBook)
+	runBookPath := fmt.Sprintf("%s/%s.json", configdir, id)
 	data, err := ioutil.ReadFile(runBookPath)
 	if err != nil {
 		return r, fmt.Errorf("cannot read run book %s: %s", runBookPath, err)
 	}
-	err = json.Unmarshal(data, &r)
+	err = json.Unmarshal(data, r)
 	if err != nil {
 		return r, err
 	}
