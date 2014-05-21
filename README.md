@@ -90,7 +90,6 @@ go build .
 - consider making the POST data from the webhook available in some way
 - more logs
 - tests
-- make listening port configurable via command line flag
 
 
 Copyright 2014, Brian Ketelsen and Kelsey Hightower
