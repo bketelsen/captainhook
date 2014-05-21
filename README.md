@@ -10,6 +10,10 @@ because that would be `insecure`, which is `bad`.
 
 ## Quick Start
 
+### Install captainhook
+
+`go get github.com/bketelsen/captainhook`
+
 ### Create the `configdir`
 
 ```
@@ -63,6 +67,9 @@ of 200 (OK) even if your scripts didn't work.  This is intentional, to avoid cau
 errors in external services like Docker or Github, which might not like you returning
 statuses other than 200 (OK).
 
+## Install
+
+`go get github.com/bketelsen/captainhook`
 
 ## Build
 
