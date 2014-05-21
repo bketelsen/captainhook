@@ -84,6 +84,11 @@ git clone git@github.com:bketelsen/captainhook.git
 ```
 go build .
 ```
+## To Do
+
+- consider making the POST data from the webhook available in some way
+- make the output of the scripts optional
+
 
 Copyright 2014, Brian Ketelsen and Kelsey Hightower
 LICENSE information found in LICENSE file.
