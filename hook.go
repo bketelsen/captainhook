@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+	"syscall"
 
 	"github.com/gorilla/mux"
 )
@@ -26,8 +27,9 @@ type response struct {
 }
 
 type result struct {
-	Stdout string `json:"stdout"`
-	Stderr string `json:"stderr"`
+	Stdout     string `json:"stdout"`
+	Stderr     string `json:"stderr"`
+	StatusCode int
 }
 
 func hookHandler(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +70,7 @@ func execScript(s script) (result, error) {
 	r := result{
 		stdout.String(),
 		stderr.String(),
+		cmd.ProcessState.Sys().(syscall.WaitStatus).ExitStatus(),
 	}
 	return r, err
 }

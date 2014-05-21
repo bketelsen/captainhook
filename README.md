@@ -88,8 +88,6 @@ go build .
 ## To Do
 
 - consider making the POST data from the webhook available in some way
-- make the output of the scripts optional
-- add the status code to the output, make it option and read the echo flag
 - more logs
 - tests
 - make listening port configurable via command line flag
