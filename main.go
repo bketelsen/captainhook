@@ -1,16 +1,27 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
+var configdir string
 
-var configdir = ""
+func init() {
+	flag.StringVar(&configdir, "configdir", "", "config dir to use")
+}
+
+
 
 func main() {
+	flag.Parse()
+	if configdir == "" {
+		log.Fatal("configdir is required")
+	}
+
 	r := mux.NewRouter()
 	r.HandleFunc("/{key}", hookHandler).Methods("GET")
 	http.Handle("/", r)
