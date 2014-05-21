@@ -41,6 +41,7 @@ mkdir ~/captainhook
     ]
 }
 ```
+Name this script `endpoint1.json`
 
 ### Start the service
 
