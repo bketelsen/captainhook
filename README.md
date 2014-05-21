@@ -5,22 +5,45 @@ A generic webhook endpoint that runs scripts based on the URL called
 
 ## Quick Start
 
-Create the `configdir`
+### Create the `configdir`
 
 ```
 mkdir ~/captainhook
 ```
 
-Add a script 
+### Add a script 
 
 ```
+{
+    "scripts": [
+        {
+            "command": "ls",
+            "args": [
+                "-l",
+                "-a"
+            ]
+        },
+        {
+            "command": "echo",
+            "args": [
+		    "hello"
+		    ]
+        }
+    ]
+}
 ```
 
+### Start the service
+
 ```
-captainhook httpd -configdir=`pwd`
+captainhook -configdir ~/captainhook
 ```
 
-from a browser or curl, call http://localhost:8080/endpoint1
+### Test using curl
+
+```
+curl http://localhost:8080/endpoint1
+```
 
 ## Build
 
