@@ -51,7 +51,7 @@ captainhook -configdir ~/captainhook
 ### Test using curl
 
 ```
-curl http://localhost:8080/endpoint1
+curl -X POST http://localhost:8080/endpoint1
 ```
 
 ### Configure calling webhooks
