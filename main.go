@@ -27,8 +27,9 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/{key}", hookHandler).Methods("GET")
+	r.HandleFunc("/{key}", hookHandler).Methods("POST")
 	http.Handle("/", r)
+
 	log.Printf("Listening on %s\n", listenAddr)
 	if err := http.ListenAndServe(listenAddr, nil); err != nil {
 		log.Fatal(err)
