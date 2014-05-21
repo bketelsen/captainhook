@@ -1,4 +1,4 @@
-package hookd
+package main
 
 import (
 	"bytes"
@@ -9,11 +9,19 @@ import (
 	"net/http"
 	"os/exec"
 
-	"github.com/bketelsen/captainhook/types"
 	"github.com/gorilla/mux"
 )
 
-func hookhandler(w http.ResponseWriter, r *http.Request) {
+type orchestration struct {
+	Scripts []script `json:"scripts"`
+}
+
+type script struct {
+	Command string   `json:"command"`
+	Args    []string `json:"args"`
+}
+
+func hookHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	key := params["key"]
 	log.Printf("Received Hook for key '%s'\n", key)
@@ -30,7 +38,7 @@ func processHandler(key string) {
 	}
 }
 
-func execScript(s types.Script) error {
+func execScript(s script) error {
 	cmd := exec.Command(s.Command, s.Args...)
 	var out bytes.Buffer
 	// keeping stdout just to see what happened
@@ -42,13 +50,13 @@ func execScript(s types.Script) error {
 	return err
 }
 
-func getScriptFromKey(key string) types.Orchestration {
+func getScriptFromKey(key string) orchestration {
 	p := fmt.Sprintf("%s/%s.json", configdir, key)
 	b, err := ioutil.ReadFile(p)
 	if err != nil {
 		log.Printf("Error opening %s\n", p)
 	}
-	var o types.Orchestration
+	var o orchestration
 	err = json.Unmarshal(b, &o)
 	if err != nil {
 		log.Println(err)

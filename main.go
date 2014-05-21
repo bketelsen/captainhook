@@ -1,23 +1,21 @@
 package main
 
 import (
-	"github.com/bketelsen/captainhook/createconfig"
-	"github.com/bketelsen/captainhook/hookd"
-	"github.com/bketelsen/captainhook/log"
-	"github.com/robmerrell/comandante"
+	"log"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
+
+var configdir = ""
+
 func main() {
-	captain := comandante.New("captainhook", "")
-	captain.IncludeHelp()
-
-	hook := hookd.NewCommand()
-	hook.FlagInit = hookd.GetFlagHandler
-	captain.RegisterCommand(hook)
-
-	config := createconfig.NewCommand()
-	config.FlagInit = createconfig.GetFlagHandler
-	captain.RegisterCommand(config)
-
-	log.PanicIf(captain.Run())
+	r := mux.NewRouter()
+	r.HandleFunc("/{key}", hookHandler).Methods("GET")
+	http.Handle("/", r)
+	log.Printf("Listening on port %s\n", ":8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 }
