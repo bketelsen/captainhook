@@ -92,6 +92,7 @@ go build .
 - add the status code to the output, make it option and read the echo flag
 - more logs
 - tests
+- make listening port configurable via command line flag
 
 
 Copyright 2014, Brian Ketelsen and Kelsey Hightower
