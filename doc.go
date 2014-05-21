@@ -5,6 +5,9 @@ This tool was built as part of a CI orchestration process, to be called when
 Docker trusted builds finish.  It explicitly ignores the posted data from the webhook
 because that would be `insecure`, which is `bad`.
 
+Despite our intended purpose, it can be used to trigger any process when you receive a post
+to a specific URL.  That's why we called it a generic webhook listener.
+
 To use captainhook, first create a directory to store the json scripts that describe your
 orchestration.  We'll refer to that directory as `configdir`.
 
