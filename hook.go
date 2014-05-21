@@ -21,33 +21,53 @@ type script struct {
 	Args    []string `json:"args"`
 }
 
+type response struct {
+	Results []result `json:"results"`
+}
+
+type result struct {
+	Stdout string `json:"stdout"`
+	Stderr string `json:"stderr"`
+}
+
 func hookHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	key := params["key"]
 	log.Printf("Received Hook for key '%s'\n", key)
-	processHandler(key)
-	w.Write([]byte("Hello " + key + " " + configdir))
+	results := processHandler(key)
+
+	data, err := json.MarshalIndent(&response{results}, "", "  ")
+	if err != nil {
+		log.Println(err.Error())
+	}
+	w.Write(data)
 }
 
-func processHandler(key string) {
+func processHandler(key string) []result {
+	results := make([]result, 0)
 	script := getScriptFromKey(key)
 	for _, x := range script.Scripts {
-		if err := execScript(x); err != nil {
+		r, err := execScript(x)
+		if err != nil {
 			log.Println("ERROR :" + err.Error())
 		}
+		results = append(results, r)
 	}
+	return results
 }
 
-func execScript(s script) error {
+func execScript(s script) (result, error) {
 	cmd := exec.Command(s.Command, s.Args...)
-	var out bytes.Buffer
-	// keeping stdout just to see what happened
-	// maybe don't need it?  Probably should log it
-	//TBD
-	cmd.Stdout = &out
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
 	err := cmd.Run()
-	fmt.Println(out.String())
-	return err
+	r := result{
+		stdout.String(),
+		stderr.String(),
+	}
+	return r, err
 }
 
 func getScriptFromKey(key string) orchestration {
