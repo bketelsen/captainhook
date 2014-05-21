@@ -36,11 +36,13 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Received Hook for key '%s'\n", key)
 	results := processHandler(key)
 
-	data, err := json.MarshalIndent(&response{results}, "", "  ")
-	if err != nil {
-		log.Println(err.Error())
+	if echo {
+		data, err := json.MarshalIndent(&response{results}, "", "  ")
+		if err != nil {
+			log.Println(err.Error())
+		}
+		w.Write(data)
 	}
-	w.Write(data)
 }
 
 func processHandler(key string) []result {
