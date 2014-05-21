@@ -43,7 +43,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-func processHandler(key string) ([]result) {
+func processHandler(key string) []result {
 	results := make([]result, 0)
 	script := getScriptFromKey(key)
 	for _, x := range script.Scripts {
@@ -51,7 +51,7 @@ func processHandler(key string) ([]result) {
 		if err != nil {
 			log.Println("ERROR :" + err.Error())
 		}
-		results = append(results, r) 
+		results = append(results, r)
 	}
 	return results
 }

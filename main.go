@@ -18,8 +18,6 @@ func init() {
 	flag.BoolVar(&echo, "echo", false, "send output from script")
 }
 
-
-
 func main() {
 	flag.Parse()
 	if configdir == "" {
