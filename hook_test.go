@@ -29,7 +29,7 @@ var hookResponseBody = `{
     {
       "stdout": "foo\n",
       "stderr": "",
-      "StatusCode": 0
+      "status_code": 0
     }
   ]
 }`
