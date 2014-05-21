@@ -88,6 +88,9 @@ go build .
 
 - consider making the POST data from the webhook available in some way
 - make the output of the scripts optional
+- add the status code to the output, make it option and read the echo flag
+- more logs
+- tests
 
 
 Copyright 2014, Brian Ketelsen and Kelsey Hightower
