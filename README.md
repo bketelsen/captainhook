@@ -86,4 +86,4 @@ go build .
 ```
 
 Copyright 2014, Brian Ketelsen and Kelsey Hightower
-LICENSE information found in LICENCE file.
+LICENSE information found in LICENSE file.
