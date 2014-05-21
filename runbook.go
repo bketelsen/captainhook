@@ -30,9 +30,9 @@ type script struct {
 	Args    []string `json:"args"`
 }
 
-// NewRunBook returns the runBook identified by id. 
+// NewRunBook returns the runBook identified by id.
 func NewRunBook(id string) (*runBook, error) {
-	return getRunBookById(id)	
+	return getRunBookById(id)
 }
 
 func (r *runBook) execute() (*runBookResponse, error) {

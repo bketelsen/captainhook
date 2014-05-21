@@ -20,10 +20,10 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	response, err := rb.execute()
 	if err != nil {
-        log.Println(err.Error())
-        http.Error(w, err.Error(), 500)
-        return
-    }
+		log.Println(err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
 	if echo {
 		data, err := json.MarshalIndent(response, "", "  ")
 		if err != nil {
