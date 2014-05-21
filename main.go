@@ -8,10 +8,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var configdir string
+var (
+	configdir string
+	echo      bool
+)
 
 func init() {
 	flag.StringVar(&configdir, "configdir", "", "config dir to use")
+	flag.BoolVar(&echo, "echo", false, "send output from script")
 }
 
 
