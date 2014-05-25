@@ -1,0 +1,10 @@
+[Unit]
+Description=Captainhook a generic webhook endpoint
+Documentation=https://github.com/bketelsen/captainhook
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/captainhook -configdir /etc/captainhook -listen-addr 0.0.0.0:8080 -echo
+
+[Install]
+WantedBy=multi-user.target
