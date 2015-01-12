@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -34,14 +36,41 @@ var hookResponseBody = `{
   ]
 }`
 
+var data = []byte(`{"test": "test"}`)
+
+var exposePostHandlerScript = `
+{
+  "scripts": [
+    {
+      "command": "echo",
+      "args": [
+        "{{POST}}"
+      ]
+    }
+  ]
+}
+`
+
+var exposePostResponseBody = `{
+  "results": [
+    {
+      "stdout": "{\"test\": \"test\"}\n",
+      "stderr": "",
+      "status_code": 0
+    }
+  ]
+}`
+
 var hookHanderTests = []struct {
 	body       string
 	echo       bool
 	script     string
 	statusCode int
+	postBody   io.Reader
 }{
-	{"", false, hookHandlerScript, 200},
-	{hookResponseBody, true, hookHandlerScript, 200},
+	{"", false, hookHandlerScript, 200, nil},
+	{hookResponseBody, true, hookHandlerScript, 200, nil},
+	{exposePostResponseBody, true, exposePostHandlerScript, 200, bytes.NewBuffer(data)},
 }
 
 func TestHookHandler(t *testing.T) {
@@ -71,7 +100,7 @@ func TestHookHandler(t *testing.T) {
 			t.Errorf(err.Error())
 		}
 
-		req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s", ts.URL, "test"), nil)
+		req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s", ts.URL, "test"), tt.postBody)
 		if err != nil {
 			t.Errorf(err.Error())
 		}

@@ -67,6 +67,23 @@ of 200 (OK) even if your scripts didn't work.  This is intentional, to avoid cau
 errors in external services like Docker or Github, which might not like you returning
 statuses other than 200 (OK).
 
+### Accessing the Request POST Body 
+You'll sometimes need to access the POST data of the request for information such as a callback URL. 
+You can pass the raw POST data to a script by adding {{POST}} to the script arguments.
+
+```json
+{
+    "scripts": [
+        {
+            "command": "echo",
+            "args": [
+            "{{POST}}"
+            ]
+        }
+    ]
+}
+``` 
+
 ## Install
 
 `go get github.com/bketelsen/captainhook`
@@ -86,7 +103,6 @@ go build .
 ```
 ## To Do
 
-- consider making the POST data from the webhook available in some way
 - more logs
 
 
