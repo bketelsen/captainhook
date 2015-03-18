@@ -84,6 +84,24 @@ You can pass the raw POST data to a script by adding {{POST}} to the script argu
 }
 ``` 
 
+### Limiting access for webhooks
+You can limit who can call your webhooks by specifying "allowedNetworks" in the json config.
+
+```json
+{
+    "scripts": [
+        {
+            "command": "echo"
+        }
+    ],
+    "allowedNetworks": [
+        "10.0.0.0/8",
+        "127.0.0.1/32"
+    ]
+}
+```
+This would allow your hook to be called from the 10.0.0.0/8 network, or from localhost.
+
 ## Install
 
 `go get github.com/bketelsen/captainhook`
