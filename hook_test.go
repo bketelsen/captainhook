@@ -26,6 +26,21 @@ var hookHandlerScript = `
   ]
 }`
 
+var hookHandlerScriptDenied = `
+{
+  "scripts": [
+    {
+      "command": "echo",
+      "args": [
+        "foo"
+      ]
+    }
+  ],
+  "allowedNetworks": [
+    "10.0.0.0/8"
+  ]
+}`
+
 var hookResponseBody = `{
   "results": [
     {
@@ -69,6 +84,7 @@ var hookHanderTests = []struct {
 	postBody   io.Reader
 }{
 	{"", false, hookHandlerScript, 200, nil},
+	{"Not authorized.\n", false, hookHandlerScriptDenied, 401, nil},
 	{hookResponseBody, true, hookHandlerScript, 200, nil},
 	{exposePostResponseBody, true, exposePostHandlerScript, 200, bytes.NewBuffer(data)},
 }

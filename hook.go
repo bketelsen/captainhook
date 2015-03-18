@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"strings"
 
@@ -18,6 +19,12 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, err.Error(), 500)
+		return
+	}
+	remoteIP := net.ParseIP(strings.Split(r.RemoteAddr, ":")[0])
+	if !rb.AddrIsAllowed(remoteIP) {
+		log.Printf("Hook id '%s' is not allowed from %v\n", id, r.RemoteAddr)
+		http.Error(w, "Not authorized.", http.StatusUnauthorized)
 		return
 	}
 	interoplatePOSTData(rb, r)
