@@ -94,7 +94,10 @@ func execScript(s script) (result, error) {
 	r := result{
 		stdout.String(),
 		stderr.String(),
-		cmd.ProcessState.Sys().(syscall.WaitStatus).ExitStatus(),
+		-1,
+	}
+	if err == nil {
+		r.StatusCode = cmd.ProcessState.Sys().(syscall.WaitStatus).ExitStatus()
 	}
 	return r, err
 }
