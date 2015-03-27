@@ -137,3 +137,31 @@ func TestHookHandler(t *testing.T) {
 		}
 	}
 }
+
+var clientIPTests = []struct {
+	proxy        bool
+	proxyHeader  string
+	clientIP     string
+	headerString string
+}{
+	{false, "", "127.0.0.1", ""},
+	{true, "X-Forwarded-For", "10.0.0.1", "10.0.0.1"},
+	{true, "X-Real-Ip", "10.0.0.1", "10.0.0.1"},
+	{true, "X-Forwarded-For", "172.16.0.1", "10.0.0.1, 172.16.0.1"},
+}
+
+func TestClientIP(t *testing.T) {
+	for _, ct := range clientIPTests {
+		proxy = ct.proxy
+		proxyHeader = ct.proxyHeader
+		r := &http.Request{
+			RemoteAddr: "127.0.0.1:55555",
+			Header:     map[string][]string{},
+		}
+		r.Header.Add(ct.proxyHeader, ct.headerString)
+		clientIP := getClientIP(r)
+		if clientIP != ct.clientIP {
+			t.Errorf("getClientIP failed with %s: %v. Expected %s, got %s", ct.proxyHeader, ct.headerString, ct.clientIP, clientIP)
+		}
+	}
+}
