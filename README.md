@@ -101,6 +101,14 @@ You can limit who can call your webhooks by specifying "allowedNetworks" in the 
 }
 ```
 This would allow your hook to be called from the 10.0.0.0/8 network, or from localhost.
+
+### Supporting proxy headers for client IP
+
+Only enable proxy support if you are on a trusted network behind a reverse proxy. End-users with direct network access can subvert the allowedNetworks restriction if proxy support is on.
+```
+captainhook -configdir ~/captainhook -enable-proxy -proxy-header X-Forwarded-For
+```
+
 ## Docker
 ```
 docker pull bketelsen/captainhook

@@ -15,7 +15,12 @@ import (
 func hookHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
-	log.Printf("Received hook for id '%s' from %s\n", id, r.RemoteAddr)
+	clientIP := getClientIP(r)
+	if clientIP != strings.Split(r.RemoteAddr, ":")[0] {
+		log.Printf("Received hook for id '%s' from %s on %s\n", id, clientIP, r.RemoteAddr)
+	} else {
+		log.Printf("Received hook for id '%s' from %s\n", id, r.RemoteAddr)
+	}
 	rb, err := NewRunBook(id)
 	if err != nil {
 		log.Println(err.Error())
@@ -60,4 +65,16 @@ func interoplatePOSTData(rb *runBook, r *http.Request) {
 			rb.Scripts[i].Args[j] = strings.Replace(rb.Scripts[i].Args[j], "{{POST}}", stringData, -1)
 		}
 	}
+}
+
+func getClientIP(r *http.Request) string {
+	remoteIP := strings.Split(r.RemoteAddr, ":")[0]
+	if !proxy {
+		return remoteIP
+	}
+	headerVal := r.Header.Get(proxyHeader)
+	// proxies can chain upstream client addresses- take only the closest (last) address
+	// http://en.wikipedia.org/wiki/X-Forwarded-For
+	upstreams := strings.Split(headerVal, ", ")
+	return upstreams[len(upstreams)-1]
 }
