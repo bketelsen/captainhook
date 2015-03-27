@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -47,8 +48,7 @@ func interoplatePOSTData(rb *runBook, r *http.Request) {
 	if r.ContentLength == 0 {
 		return
 	}
-	data := make([]byte, r.ContentLength)
-	_, err := r.Body.Read(data)
+	data, err := ioutil.ReadAll(r.Body)
 	if err != nil && err != io.EOF {
 		log.Fatal(err)
 		return
