@@ -101,6 +101,11 @@ You can limit who can call your webhooks by specifying "allowedNetworks" in the 
 }
 ```
 This would allow your hook to be called from the 10.0.0.0/8 network, or from localhost.
+## Docker
+`docker pull bketelsen/captainhook`
+`mkdir /some/local/config`
+`$EDITOR /some/local/config/myhook.json`
+`docker run -d -v /some/local/config:/config bketelsen/captainhook`
 
 ## Install
 
