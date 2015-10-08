@@ -165,3 +165,26 @@ func TestClientIP(t *testing.T) {
 		}
 	}
 }
+
+func TestInterplateGetData(t *testing.T) {
+
+	rb := &runBook{
+		Scripts: []script{
+			{Command: "echo",
+				Args: []string{
+					"{{var1}}",
+				},
+			}},
+	}
+
+	r, err := http.NewRequest("POST", "/?var1=test1", nil)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+	interpolateGETData(rb, r)
+
+	if rb.Scripts[0].Args[0] != "test1" {
+		t.Errorf("Expected %s got %s", "test1", rb.Scripts[0].Args[0])
+	}
+
+}
