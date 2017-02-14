@@ -11,5 +11,5 @@ pipeline:
   slack:
     image: plugins/slack
     webhook: ${SLACK_WEBHOOK}
-    channel: general
+    channel: ci
 
