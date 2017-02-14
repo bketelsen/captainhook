@@ -1,8 +1,11 @@
 pipeline:
   build:
     image: golang
+    environment:
+      - GOPATH=/drone
     commands:
       - go env
       - go get
       - go build
       - go test
+
