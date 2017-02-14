@@ -1,6 +1,7 @@
 # captainhook
 
 [![Build Status](https://drone.gopheracademy.com/api/badges/bketelsen/captainhook/status.svg)](https://drone.gopheracademy.com/bketelsen/captainhook)
+
 A generic webhook endpoint that runs scripts based on the URL called
 
 This tool was built as part of a CI orchestration process, to be called when
