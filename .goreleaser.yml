@@ -23,7 +23,6 @@ builds:
   binary: newgo
 archive:
   format: tar.gz
-  name_template: '{{.Binary}}_{{.Version}}_{{.Os}}_{{.Arch }}{{if .Arm}}v{{.Arm }}{{end }}'
   files:
   - licence*
   - LICENCE*
