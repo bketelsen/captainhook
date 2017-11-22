@@ -21,3 +21,7 @@ _testmain.go
 
 *.exe
 *.test
+captainhook
+/.GOPATH
+/bin
+.envrc

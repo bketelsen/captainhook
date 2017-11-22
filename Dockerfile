@@ -1,3 +1,9 @@
-FROM golang:1.4.2-onbuild
+FROM golang
+RUN go get -u github.com/golang/dep/cmd/dep
+RUN go env
+ADD . /go/src/github.com/bketelsen/captainhook
+WORKDIR /go/src/github.com/bketelsen/captainhook
+RUN make clean
+RUN make
 VOLUME /config
-CMD app -listen-addr 0.0.0.0:8080 -configdir /config
+CMD /go/src/github.com/bketelsen/captainhook/bin/captainhook
