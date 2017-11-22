@@ -40,7 +40,7 @@ tags: .GOPATH/.ok
 	$Q @git tag
 
 .PHONY: release
-release: clean-dist build
+release: .GOPATH/.ok clean-dist build
 	goreleaser
 
 
