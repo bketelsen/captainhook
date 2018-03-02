@@ -36,9 +36,8 @@ tag:
 	$Q @git tag -a v$(GITVERSION) -m $(GITVERSION)
 
 .PHONY: release
-release: clean-dist build tag docker
+release: clean-dist build tag 
 	$Q goreleaser
-	$Q docker push $(DOCKER_IMAGE):$(GITVERSION) .
 
 ### Code not in the repository root? Another binary? Add to the path like this.
 # .PHONY: otherbin
