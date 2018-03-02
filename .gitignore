@@ -26,3 +26,4 @@ captainhook
 /bin
 .envrc
 dist/
+cover
