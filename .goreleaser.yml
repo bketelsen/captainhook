@@ -4,11 +4,6 @@ release:
     owner: bketelsen
     name: captainhook
   name_template: '{{.Tag}}'
-brew:
-  commit_author:
-    name: captainhook
-    email: bketelsen@gmail.com
-  install: bin.install "newgo"
 builds:
 - goos:
   - linux
@@ -34,10 +29,6 @@ archive:
   - README*
   - changelog*
   - CHANGELOG*
-fpm:
-  bindir: /usr/local/bin
-snapshot:
-  name_template: SNAPSHOT-{{.Commit }}
 checksum:
   name_template: '{{.ProjectName }}_{{.Version }}_checksums.txt'
 

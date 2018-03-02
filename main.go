@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -12,6 +14,7 @@ var (
 	configdir   string
 	echo        bool
 	proxy       bool
+	version     bool
 	proxyHeader string
 	listenAddr  string
 )
@@ -26,6 +29,12 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	if BuildDate == "" {
+		BuildDate = time.Now().Format("15:04:05 Jan 2, 2006")
+	}
+	fmt.Printf("captain hook version %s built %v\n", Version, BuildDate)
+
 	if configdir == "" {
 		log.Fatal("configdir is required")
 	}
