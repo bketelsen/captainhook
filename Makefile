@@ -4,7 +4,6 @@ dist_dir := $(CURDIR)/dist
 exec := $(DOCKER_IMAGE)
 github_repo := bketelsen/captainhook
 GITVERSION ?= dev
-MESSAGE ?= "captainhook release"
 
 # V := 1 # When V is set, print commands and build progress.
 
@@ -29,9 +28,12 @@ tags:
 	@echo "Listing tags..."
 	$Q @git tag
 
+echo:
+	@echo "MESSAGE " $(MESSAGE)
+
 tag:
 	@echo "Creating tag" $(GITVERSION)
-	$Q @git tag -a v$(GITVERSION) -m $(message)
+	$Q @git tag -a v$(GITVERSION) -m $(GITVERSION)
 
 .PHONY: release
 release: clean-dist build tag docker
