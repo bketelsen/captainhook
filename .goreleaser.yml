@@ -15,7 +15,7 @@ builds:
   - "6"
   main: .
   ldflags: -s -w -X main.Version={{.Version}}  -X main.BuildDate={{.Date}}
-  binary: newgo
+  binary: captainhook
 archive:
   format: tar.gz
   name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{
