@@ -29,6 +29,4 @@ archive:
   - README*
   - changelog*
   - CHANGELOG*
-checksum:
-  name_template: '{{.ProjectName }}_{{.Version }}_checksums.txt'
 
