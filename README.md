@@ -121,6 +121,8 @@ docker run -d -v /some/local/config:/config bketelsen/captainhook
 
 ## Install
 
+captainhook requires Go 1.10 to build locally with 'vgo' support.
+
 `go get github.com/bketelsen/captainhook`
 
 ## Build
