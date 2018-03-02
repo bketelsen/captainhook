@@ -3,8 +3,8 @@ DOCKER_IMAGE := captainhook
 dist_dir := $(CURDIR)/dist
 exec := $(DOCKER_IMAGE)
 github_repo := bketelsen/captainhook
-version ?= dev
-message ?= "captainhook release"
+GITVERSION ?= dev
+MESSAGE ?= "captainhook release"
 
 # V := 1 # When V is set, print commands and build progress.
 
@@ -30,13 +30,13 @@ tags:
 	$Q @git tag
 
 tag:
-	@echo "Creating tag" $(version)
-	$Q @git tag -a v$(version) -m $(message)
+	@echo "Creating tag" $(GITVERSION)
+	$Q @git tag -a v$(GITVERSION) -m $(message)
 
 .PHONY: release
 release: clean-dist build tag docker
 	$Q goreleaser
-	$Q docker push $(DOCKER_IMAGE):$(version) .
+	$Q docker push $(DOCKER_IMAGE):$(GITVERSION) .
 
 ### Code not in the repository root? Another binary? Add to the path like this.
 # .PHONY: otherbin
@@ -52,7 +52,7 @@ release: clean-dist build tag docker
 
 docker:
 	@echo "Docker Build..."
-	$Q docker build -t $(DOCKER_IMAGE):$(version) .
+	$Q docker build -t $(DOCKER_IMAGE):$(VERSION) .
 
 clean:
 	@echo "Clean..."
