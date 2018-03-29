@@ -35,7 +35,7 @@ tag:
 	@echo "Creating tag" $(GITVERSION)
 	$Q @git tag -a v$(GITVERSION) -m $(GITVERSION)
 	@echo "pushing tag" $(GITVERSION)
-	$Q @git push -v$(GITVERSION)
+	$Q @git push v$(GITVERSION)
 
 .PHONY: release
 release: setup clean-dist build tag
