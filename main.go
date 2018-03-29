@@ -36,6 +36,7 @@ func main() {
 	}
 	if version {
 		fmt.Printf("captain hook version %s built %v\n", Version, BuildDate)
+
 		return
 	}
 
