@@ -34,6 +34,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	interoplatePOSTData(rb, r)
+	interpolateGETData(rb, r)
 	response, err := rb.execute()
 	if err != nil {
 		log.Println(err.Error())
@@ -46,6 +47,20 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 			log.Println(err.Error())
 		}
 		w.Write(data)
+	}
+}
+
+func interpolateGETData(rb *runBook, r *http.Request) {
+	vals := r.URL.Query()
+	if len(vals) == 0 {
+		return
+	}
+	for k, v := range vals {
+		for i := range rb.Scripts {
+			for j := range rb.Scripts[i].Args {
+				rb.Scripts[i].Args[j] = strings.Replace(rb.Scripts[i].Args[j], "{{"+k+"}}", v[0], -1)
+			}
+		}
 	}
 }
 
