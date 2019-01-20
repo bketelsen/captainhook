@@ -27,7 +27,8 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	remoteIP := net.ParseIP(strings.Split(r.RemoteAddr, ":")[0])
+	host, _, _ := net.SplitHostPort(r.RemoteAddr)
+	remoteIP := net.ParseIP(host)
 	if !rb.AddrIsAllowed(remoteIP) {
 		log.Printf("Hook id '%s' is not allowed from %v\n", id, r.RemoteAddr)
 		http.Error(w, "Not authorized.", http.StatusUnauthorized)
