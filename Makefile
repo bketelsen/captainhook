@@ -9,7 +9,7 @@ BINARY := captainhook
 # V := 1 # When V is set, print commands and build progress.
 
 .PHONY: all
-all: setup test build
+all: setup test build shoulders
 
 .PHONY: build
 build: setup
@@ -40,6 +40,9 @@ tag:
 .PHONY: release
 release: setup clean-dist build tag
 	$Q goreleaser
+
+shoulders:
+	$Q shoulders -w
 
 
 ##### ^^^^^^ EDIT ABOVE ^^^^^^ #####
@@ -94,6 +97,7 @@ setup: clean
     fi
 	go get -u rsc.io/goversion
 	go get -u golang.org/x/tools/cmd/goimports
+	go get -u github.com/gobuffalo/shoulders
 
 VERSION          := $(shell git describe --tags --always --dirty="-dev")
 DATE             := $(shell date -u '+%Y-%m-%d-%H:%M UTC')
