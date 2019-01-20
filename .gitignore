@@ -27,3 +27,4 @@ captainhook
 .envrc
 dist/
 cover
+.idea/

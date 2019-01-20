@@ -14,12 +14,12 @@ all: setup test build
 .PHONY: build
 build: setup
 	@echo "Building..."
-	$Q vgo build $(if $V,-v) $(VERSION_FLAGS)
+	$Q go build $(if $V,-v) $(VERSION_FLAGS)
 
 .PHONY: dist
 dist: setup clean-dist
 	@echo "Building Distribution..."
-	$Q vgo build $(if $V,-v) $(VERSION_FLAGS) -o $(dist_dir)/$(BINARY) $(IMPORT_PATH)
+	$Q go build $(if $V,-v) $(VERSION_FLAGS) -o $(dist_dir)/$(BINARY) $(IMPORT_PATH)
 
 .PHONY: clean-dist
 clean-dist:
@@ -55,28 +55,28 @@ docker:
 
 clean:
 	@echo "Clean..."
-	$Q rm -rf captainhook
+	$Q rm -rf $(BINARY)
 
 test:
 	@echo "Testing..."
-	$Q vgo test $(if $V,-v) ./...
+	$Q go test $(if $V,-v) ./...
 ifndef CI
 	@echo "Testing Outside CI..."
-	@echo "VGO Vet"
-	$Q vgo vet ./...
-	@echo "VGO test -race"
-	$Q GODEBUG=cgocheck=2 vgo test -race 
+	@echo "GO Vet"
+	$Q go vet ./...
+	@echo "GO test -race"
+	$Q GODEBUG=cgocheck=2 go test -race
 else
 	@echo "Testing in CI..."
-	$Q ( vgo vet ./...; echo $$? ) | \
+	$Q ( go vet ./...; echo $$? ) | \
        tee test/vet.txt | sed '$$ d'; exit $$(tail -1 test/vet.txt)
-	$Q ( GODEBUG=cgocheck=2 vgo test -v -race ./...; echo $$? ) | \
+	$Q ( GODEBUG=cgocheck=2 go test -v -race ./...; echo $$? ) | \
        tee test/output.txt | sed '$$ d'; exit $$(tail -1 test/output.txt)
 endif
 
 list:
 	@echo "List..."
-	vgo list -m
+	go list -m
 
 
 format: $(GOIMPORTS)
@@ -92,7 +92,6 @@ setup: clean
 	if ! grep "dist" .gitignore > /dev/null 2>&1; then \
         echo "dist" >> .gitignore; \
     fi
-	go get -u golang.org/x/vgo
 	go get -u rsc.io/goversion
 	go get -u golang.org/x/tools/cmd/goimports
 
