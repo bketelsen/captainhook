@@ -48,5 +48,5 @@ release-test:
 
 release:
 	make tidy
-	release -y -f version.go
+	release -f version.go
 	make tidy
