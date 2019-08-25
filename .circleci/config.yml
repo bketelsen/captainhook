@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.12
+
+    steps:
+      - checkout
+
+      - run: go test -v  -timeout=5s -race ./...
+      - run: GOOS=darwin go build -o build/${CIRCLE_BRANCH}/darwin/captainhook
+      - run: GOOS=linux go build -o build/${CIRCLE_BRANCH}/linux/captainhook
+
+      - store_artifacts:
+          path: build
