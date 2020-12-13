@@ -1,8 +1,7 @@
-FROM golang:1.10 as builder
+FROM golang:1.15 as builder
 ADD . /go/src/github.com/bketelsen/captainhook
 WORKDIR /go/src/github.com/bketelsen/captainhook
-RUN go get -u golang.org/x/vgo
-RUN CGO_ENABLED=0 GOOS=linux vgo build -a -installsuffix cgo -o captainhook .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o captainhook .
 
 FROM alpine:latest as alpine
 RUN apk --no-cache add ca-certificates
@@ -16,8 +15,8 @@ COPY --from=alpine /root/captainhook /usr/bin/captainhook
 COPY --from=alpine /etc/ssl/certs/ /etc/ssl/certs
 
 VOLUME /config
-ENTRYPOINT [ "/root/captainhook" ]
-CMD ["/root/captainhook"]
+ENTRYPOINT ["/usr/bin/captainhook"]
+CMD ["/usr/bin/captainhook"]
 
 
 
