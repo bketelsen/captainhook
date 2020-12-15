@@ -1,6 +1,6 @@
 # captainhook
 
-[![Build Status](https://drone.gopheracademy.com/api/badges/bketelsen/captainhook/status.svg)](https://drone.gopheracademy.com/bketelsen/captainhook)
+![Build Status](https://github.com/bketelsen/captainhook/workflows/Build%20Go/badge.svg?branch=master)
 
 A generic webhook endpoint that runs scripts based on the URL called
 
@@ -124,7 +124,7 @@ docker run -d -v /some/local/config:/config bketelsen/captainhook
 
 ## Install
 
-captainhook requires Go 1.10 to build locally with 'vgo' support.
+captainhook requires Go 1.13+ to build locally.
 
 `go get github.com/bketelsen/captainhook`
 
