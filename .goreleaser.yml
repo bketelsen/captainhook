@@ -20,8 +20,7 @@ builds:
   - windows
   goarch:
   - amd64
-  goarm:
-  - "6"
+  - arm64
   main: .
   ldflags: -s -w -X main.Version={{.Version}}  -X main.BuildDate={{.Date}}
   binary: captainhook
