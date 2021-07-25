@@ -1,4 +1,4 @@
-FROM golang:1.15
+FROM golang:1.16
 ADD . /go/src/github.com/bketelsen/captainhook
 WORKDIR /go/src/github.com/bketelsen/captainhook
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o captainhook .
