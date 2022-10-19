@@ -4,7 +4,7 @@
   lib,
 }:
 buildGoModule {
-  pname = "my-package";
+  pname = "captainhook";
   version = "0.0.0";
   src = self; # + "/src";
   # vendorSha256 should be set to null if dependencies are vendored. If the dependencies aren't
